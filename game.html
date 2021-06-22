@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="./style/game.css" rel="stylesheet" type="text/css">
+<title>Just Keep Swimming</title>
+</head>
+
+<body onload = "startGame()">
+<header> Stay Afloat! </header>
+
+<div id = "canvas-container"></div>
+<script>
+var logoImg=new Image();
+logoImg.src="dog.gif";
+var bgImg=new Image();
+bgImg.src="bricks.jpg";
+var myGamePiece;
+var myObstacles = [];
+var myScore;
+var myGameOver;
+var myHighstore;
+var myGameArea = {
+    canvas : document.createElement("canvas"),
+    start : function() {
+        this.canvas.width = 720; //480
+        this.canvas.height = 405;//270
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.frameNo = 0;
+        this.interval = setInterval(updateGameArea, 20);
+        },
+    clear : function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+}
+
+function startGame() {
+    myGamePiece = new component(50, 50, "#87ceeb", 140, 120, "piece");
+    myGamePiece.gravity = 0.05;
+    myScore = new component("30px", "Consolas", "white", 280, 40, "text");
+    myGameOver = new component ("100px", "Arial, Helvetica, sans-serif" , "white", 50, 230, "text");
+    myHighstore = new component ("20px", "Consolas", "white", 530, 30, "text");
+    myGameArea.start();
+}
+
+function component(width, height, color, x, y, type) {
+    this.type = type;
+    this.score = 0;
+    this.width = width;
+    this.height = height;
+    this.speedX = 0;
+    this.speedY = 0;    
+    this.x = x;
+    this.y = y;
+    this.gravity = 0.5;
+    this.gravitySpeed = 0;
+
+    this.update = function() {
+        ctx = myGameArea.context;
+        if (this.type == "text") {
+            ctx.font = this.width + " " + this.height;
+            ctx.fillStyle = color;
+            ctx.fillText(this.text, this.x, this.y);
+        } else {
+            ctx.fillStyle = color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+
+        if (this.type == "piece"){
+        	   	var logo = {
+                  img: logoImg
+                }
+                ctx.fillStyle = "#87ceeb";
+		ctx.drawImage(logo.img, this.x, this.y , this.width, this.height);
+        }
+        if (this.type == "bricks"){
+                var backg = {
+                  img: bgImg
+                }
+                ctx.drawImage(backg.img, this.x, this.y, this.width, this.height)
+        }
+    }
+
+    this.newPos = function() {
+        this.gravitySpeed += this.gravity;
+        this.x += this.speedX;
+        this.y += this.speedY + this.gravitySpeed;
+        this.hitBottom();
+    }
+
+    this.hitBottom = function() {
+        var rockbottom = myGameArea.canvas.height - this.height;
+        if (this.y > rockbottom) {
+            this.y = rockbottom;
+            this.gravitySpeed = 0;
+        }
+    }
+
+    this.crashWith = function(otherobj) {
+        var myleft = this.x;
+        var myright = this.x + (this.width);
+        var mytop = this.y;
+        var mybottom = this.y + (this.height);
+        var otherleft = otherobj.x;
+        var otherright = otherobj.x + (otherobj.width);
+        var othertop = otherobj.y;
+        var otherbottom = otherobj.y + (otherobj.height);
+        var crash = true;
+        if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
+            crash = false;
+        }
+        myGameOver.text = "GAME OVER"
+        myHighstore.text = "Highscore : " + myGameArea.frameNo;
+        myGameOver.update();
+        myHighstore.update();
+        return crash;
+    }
+}
+
+function updateGameArea() {
+    var x, height, gap, minHeight, maxHeight, minGap, maxGap;
+    for (i = 0; i < myObstacles.length; i += 1) {
+        if (myGamePiece.crashWith(myObstacles[i])) {
+            return;
+        } 
+    }
+    myGameArea.clear();
+    myGameArea.frameNo += 1;
+    if (myGameArea.frameNo == 1 || everyinterval(150)) {
+        x = myGameArea.canvas.width;
+        minHeight = 20;
+        maxHeight = 250;
+        height = Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
+        minGap = 70;
+        maxGap = 150;
+        gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
+        myObstacles.push(new component(50, height, "black", x, 0, "bricks"));
+        myObstacles.push(new component(50, x - height - gap, "black", x, height + gap, "bricks"));
+    }
+    for (i = 0; i < myObstacles.length; i += 1) {
+        myObstacles[i].x += -1;
+        myObstacles[i].update();
+    }
+
+    myScore.text="SCORE: " + myGameArea.frameNo;
+    myScore.update();
+    myGamePiece.newPos();
+    myGamePiece.update();
+}
+
+function everyinterval(n) {
+    if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
+    return false;
+}
+
+function accelerate(n) {
+    myGamePiece.gravity = n;
+}
+</script>
+
+<button id ="buttonpress" onmousedown="accelerate(-0.15)" onmouseup="accelerate(0.05)" >Swim</button>
+<button id ="reset" onclick="window.location.reload();" >Reset</button>
+<h1 style = "text-align: center">How long can you stay afloat?</h1>
+
+<footer class="footer-distributed">
+        <img src="./assets/corgi.png" height="165">
+        <div class="footer-left">
+            <h3>Stay Afloat</h3>
+            <span style="font-size: 14px; color: #CFB997;">My mind. My participation. </span><br><br>
+                <span>Aim of our project:</span>
+                <p>We hope to promote mind training as well as active online participation from our users!</p>
+            <p class="footer-name">© 2021 CSAD Mini Project <3</p>
+        </div>
+
+        <div class="footer-right">
+            <p class="footer-about">
+                <p class="footer-links">
+                <a href="./login.html>Home</a>
+                |
+                <a href="./about_page.html">About us</a>
+                |
+                <a href="./forum.html">Discussion Forum</a></p>
+            <div>
+                <i class="envelope"></i>
+                <p>Contact us: <br>
+                    <a href="mailto:anushka.19@ichat.sp.edu.sg">anushka.19@ichat.sp.edu.sg</a> |
+                    <a href="mailto:yeoaugustine.19@ichat.sp.edu.sg">yeoaugustine.19@ichat.sp.edu.sg</a> |
+                    <a href="mailto:hanyi.20@ichat.sp.edu.sg">hanyi.20@ichat.sp.edu.sg</a> |
+                    <a href="mailto:michellemt.19@ichat.sp.edu.sg">michellemt.19@ichat.sp.edu.sg</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
