@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="./style/login_stylesheet.css" type="text/css"rel="stylesheet">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Our Aim</title>
+<style>
+   
+    body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  
+}
+
+    html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+    .column {
+  float: left;
+  width: 33.3%;
+  margin-bottom: 16px;
+  padding: 0 8px;
+    }
+    
+    .card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 8px;
+    }
+
+    .about-section {
+  padding: 50px;
+  text-align: center;
+  background-color: #CFB997;
+  color: white;
+    }
+
+    .container {
+  padding: 0 16px;
+    }
+
+    .container::after, .row::after {
+  content: "";
+  clear: both;
+  display: table;
+    }
+
+    .title {
+  color: grey;
+    }
+
+    .button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #CFB997;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+    }
+
+    .button:hover {
+  background-color: #555;
+    }
+    
+    .center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
+</style>
+  </head>
+<body>
+  
+  <!-- Navigation Bar -->      
+    <div class="topnavbar">
+        <div class="topnav">
+            <a href="./">Home</a>
+            <a href="./about_page.html">About us</a>
+            <a href="./forum.html">Discussion Forum</a>
+            
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>">
+                    <div class="login-container">
+                    <input type="text" placeholder="Username" name="username">
+                    <input type="password" placeholder="Password" name="psw">
+                    <button type="submit" name="login_user">Login</button>
+                    <button type="button" onclick="register()">Register</button>
+                    </div>
+                </form>
+                         
+        </div> 
+    </div>
+            
+  <script>
+        function register() {
+            location.replace("./insert_register.html")
+        }
+        </script>
+
+  <!-- Header -->
+  <div class="about-section">
+  <h1>Our Aim</h1>
+  </div>
+  
+  <!-- Slideshow -->   
+    <section class="center">
+  <img class="mySlides" src="./assets/activeaging1.jpg" >
+  <img class="mySlides" src="./assets/activeaging2.jpg" >
+  <img class="mySlides" src="./assets/activeaging3.jpg" >
+  </section>
+    
+    
+<!-- Description -->
+<section class="w3-container w3-center w3-content" style="max-width:600px">
+  <br><br>
+  <p>One of the biggest challenges that Singapore faces today is its 
+     increasingly ageing population. While we had one of the highest life 
+     expectancies in the world in 2018, we also had one of the lowest fertility
+     rates. This puts pressure on our society to support our ageing population.</p>
+  <br>
+  <p>When we reach a certain age in our life where we’re way past our glory days,
+      seniors often feel like they have lost a part of their “young and adventurous”
+      self. From a healthcare perspective, many elderly people may have physical
+      limitations, where they are not able to do the usual things that they would
+      do, and can even begin to feel enslaved to the ageing process. But growing
+      older does not always have to be seen in a bad light. </p>
+  <br>
+  <p>Our aim of this project is to tackle two out of the three pillars of active
+     ageing which are: Optimizing opportunities for health and Participation. </p>
+  <br>   
+  <p>We have decided to approach this through an online game which promotes the 
+     stimulation of the minds of participants as they are required to maintain a
+     high level of concentration and develop strategies in order to win. Thus, 
+     keeping their mind active which helps maintain their mental wellbeing.</p>
+  <br>
+  <p>Additionally, we have also encouraged interaction amongst participants 
+     through the use of a forum where they are able to chat with each other 
+     freely while practicing good cyber wellness habits.</p>
+</section>
+
+<footer class="footer-distributed">
+        <img src="./assets/corgi.png" height="165">
+        <div class="footer-left">
+            <h3>Stay Afloat</h3>
+            <span style="font-size: 14px; color: #CFB997;">My mind. My participation. </span><br><br>
+                <span>Aim of our project:</span>
+                <p>We hope to promote mind training as well as active online participation from our users!</p>
+            <p class="footer-name">© 2021 CSAD Mini Project <3</p>
+        </div>
+
+        <div class="footer-right">
+            <p class="footer-about">
+                <p class="footer-links">
+                <a href="./">Home</a>
+                |
+                <a href="./game.html">Game</a>
+                |
+                <a href="./about_page.html">About us</a>
+                |
+                <a href="./forum.html">Discussion Forum</a></p>
+            <div>
+                <i class="envelope"></i>
+                <p>Contact us: <br>
+                    <a href="mailto:anushka.19@ichat.sp.edu.sg">anushka.19@ichat.sp.edu.sg</a> |
+                    <a href="mailto:yeoaugustine.19@ichat.sp.edu.sg">yeoaugustine.19@ichat.sp.edu.sg</a> |
+                    <a href="mailto:hanyi.20@ichat.sp.edu.sg">hanyi.20@ichat.sp.edu.sg</a> |
+                    <a href="mailto:michellemt.19@ichat.sp.edu.sg">michellemt.19@ichat.sp.edu.sg</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+        <!-- JavaScript -->
+        <script>
+            var myIndex = 0;
+            carousel();
+            
+        function carousel() {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+        }
+        myIndex++;
+        if (myIndex > x.length) {myIndex = 1}
+        x[myIndex-1].style.display = "block";
+        setTimeout(carousel, 3000);
+        }
+        </script>
+        <script type ="text/javascript" src="./style/navigation.js"></script>
+
+    </body>
+</html>
