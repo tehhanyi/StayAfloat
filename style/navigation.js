@@ -1,17 +1,17 @@
 //HEADER & FOOTER JAVASCRIPT
 
         function register() {
-            location.replace("http://localhost:8080/CSADMiniProject/register_page");
+            location.replace("./register_page.php");
         }
         function navigateAim(){
-            location.replace("http://localhost:8080/CSADMiniProject/about_aim.php");
+            location.replace("./about_aim.html");
         } 
          function navigateTeam(){
-            location.replace("http://localhost:8080/CSADMiniProject/about_team.php");
+            location.replace("./about_team.html");
         }    
         
         function navigateAbout(){
-            location.replace("http://localhost:8080/CSADMiniProject/about_page.php");
+            location.replace("./about_page.html");
         } 
         
         function navigatePartner(){
