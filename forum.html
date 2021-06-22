@@ -1,0 +1,260 @@
+<?php include 'server2.php'; ?>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Forum Page</title>
+        <link href="./style/login_stylesheet.css" type="text/css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css">
+        <style>
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                background-color: white;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            /* Add padding to containers */
+            .container {
+                padding: 15px;
+                background-color: #e9e9e9;
+            }
+
+            /* Full-width input fields */
+            input[type=text], input[type=password] {
+                width: 100%;
+                padding: 15px;
+                margin: 5px 0 22px 0;
+                display: inline-block;
+                border: none;
+                background: white;
+                opacity: 0.5;
+            }
+
+            input[type=text]:focus, input[type=password]:focus {
+                background-color: white;
+                outline: none;
+                opacity: 1;
+            }
+           
+            /* Set a style for the submit button */
+            .btn {
+                background-color: #98BF64;
+                color: white;
+                padding: 8px 15px;
+                margin: 8px 0;
+                border: none;
+                font-size: 10px;
+                cursor: pointer;
+                text-decoration: none;
+                border-radius: 10px;
+                width: 100%;
+                opacity: 0.9;
+            }
+             .addbtn {
+                background-color: #E1C699;
+                color: white;
+                padding: 15px 15px;
+                margin: 8px 0;
+                border: none;
+               
+                cursor: pointer;
+                text-decoration: none;
+                border-radius: 10px;
+                width: 100%;
+                opacity: 0.9;
+            }
+            .hbtn {
+                background-color: #E1C699;
+                color: white;
+                padding:15px 0px;
+                border: none;
+               cursor: pointer;
+                text-decoration: none;
+                border-radius: 10px;
+                width: 100%;
+                opacity: 0.9;
+            }
+            .dbtn {
+               background-color: #BC544B;
+                color: white;
+                padding: 8px 15px;
+                margin-left: 1100px;
+                margin-bottom: 50px;
+                border: none;
+                font-size: 10px;
+                cursor: pointer;
+                text-decoration: none;
+                border-radius: 10px;
+                width: 100%;
+                opacity: 0.9;
+            }
+            hr{
+                border-top: 5px solid #E1C699;
+                    border-radius: 10px;
+            }
+
+            .btn:hover {
+                background-color: #E1C699;
+            }
+
+            /* Add a blue text color to links */
+            a {
+                color: dodgerblue;
+            }
+
+            /* Set a grey background color and center the text of the "sign in" section */
+            .msg {
+                margin: 30px auto;
+                padding: 10px;
+                border-radius: 5px;
+                color: #3c763d;
+                background: #dff0d8;
+                border: 1px solid #3c763d;
+                width: 50%;
+                text-align: center;
+            }
+            
+            .about-section {
+                padding: 50px;
+                text-align: center;
+                background-color: #CFB997;
+                color: white;
+            }
+            
+            #button {
+                float: right;
+                margin-left: 10px;
+                margin-right: 10px;
+                border: none;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <?php if (isset($_SESSION['message'])): ?>
+            <div style="color:#728C69">
+                <?php
+                echo $_SESSION['message'];
+                unset($_SESSION['message']);
+                ?>
+            </div>
+        <?php endif ?>
+        <?php if (isset($_SESSION['error']['message'])): ?>
+            <div style="color:#BC544B">
+                <?php
+                echo $_SESSION['error']['message'];
+                unset($_SESSION['error']['message']);
+                ?>
+            </div>
+        <?php endif ?>
+        <?php $results = mysqli_query($db, "SELECT * FROM info"); ?>
+          <div class="topnavbar">
+        
+        <div class="topnav">
+            <a href="http://localhost:8080/CSADMiniProject/login.php" >Home</a>
+            <a href="http://localhost:8080/CSADMiniProject/about_page">About us</a>
+            <a href="http://localhost:8080/CSADMiniProject/forum.php">Discussion Forum</a>
+            
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>">
+                    <div class="login-container">
+                    <input type="text" placeholder="Username" name="username">
+                    <input type="password" placeholder="Password" name="psw">
+                    <button type="submit" name="login_user">Login</button>
+                    <button type="button" onclick="register()">Register</button>
+                    </div>
+                </form>
+                         
+        </div> 
+    </div>
+            
+        <script>
+        function game()
+        {
+            location.replace("./game.html")
+        }
+        function register() {
+            location.replace("./insert_register.html")
+        }
+        </script>
+        
+        
+        <div class="about-section">
+            <h1>Discussion Forum</h1>
+        </div>
+        
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" class="container" >
+            <input type="hidden" name="id" value="<?php echo $id; ?>">
+            <div>
+                
+                <label>User</label>
+                <input type="text" name="user" value="<?php echo $user; ?>" required >
+            </div>
+            <div>
+                <label>Comment</label>
+                <input type="text" name="comment" value="<?php echo $comment; ?>" required>
+            </div>
+            <div>
+                <?php if ($update == true): ?>
+                    <button type="submit" name="update" class="btn" >update</button>
+                <?php else: ?>
+                    <button type="submit" name="save" class="addbtn">Add Comment</button>
+                <?php endif ?>
+            </div>
+        </form>
+        
+        <table>
+            <?php
+            while ($row = mysqli_fetch_assoc($results)) { ?>
+                <tr style="font-size:15px; color:#b7884d">
+                    <td><?php echo $row['user']; ?></td>
+                </tr>
+                  
+                <tr style="font-size:20px;">
+                    <td><p><?php echo $row['comment']; ?></p></td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="server.php?del=<?php echo $row['id']; ?>" class="dbtn"> Delete</a>
+                    </td>
+                    <td>
+                        <a href="index.php?edit=<?php echo $row['id']; ?>" class="btn">Edit</a>
+                    </td>
+                </tr>
+            <?php } ?>
+        </table> </br>
+        
+<footer class="footer-distributed">
+        <img src="./assets/corgi.png" height="165">
+        <div class="footer-left">
+            <h3>Stay Afloat</h3>
+            <span style="font-size: 14px; color: #CFB997;">My mind. My participation. </span><br><br>
+                <span>Aim of our project:</span>
+                <p>We hope to promote mind training as well as active online participation from our users!</p>
+            <p class="footer-name">© 2021 CSAD Mini Project <3</p>
+        </div>
+
+        <div class="footer-right">
+            <p class="footer-about">
+                <p class="footer-links">
+                <a href="./">Home</a>
+                |
+                <a href="./game.html">Game</a>
+                |
+                <a href="./about_page.html">About us</a>
+                |
+                <a href="./forum.html">Discussion Forum</a></p>
+            <div>
+                <i class="envelope"></i>
+                <p>Contact us: <br>
+                    <a href="mailto:anushka.19@ichat.sp.edu.sg">anushka.19@ichat.sp.edu.sg</a> |
+                    <a href="mailto:yeoaugustine.19@ichat.sp.edu.sg">yeoaugustine.19@ichat.sp.edu.sg</a> |
+                    <a href="mailto:hanyi.20@ichat.sp.edu.sg">hanyi.20@ichat.sp.edu.sg</a> |
+                    <a href="mailto:michellemt.19@ichat.sp.edu.sg">michellemt.19@ichat.sp.edu.sg</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+    </body>
+</html>
