@@ -18,6 +18,7 @@ About:
       
      Our aim of this project is to tackle two out of the three pillars of active
      ageing which are: Optimizing opportunities for health and Participation.
+     
      We have decided to approach this through an online game which promotes the 
      stimulation of the minds of participants as they are required to maintain a
      high level of concentration and develop strategies in order to win. Thus, 
